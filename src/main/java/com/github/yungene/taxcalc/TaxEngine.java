@@ -17,12 +17,17 @@ public class TaxEngine {
 
 	public TaxEngine(List<Transaction> transactions) {
 		this.transactions = new ArrayList<>(transactions);
-		// TODO: sort by datetime with seq number as tie-breaker. This way less
-		// error-prone.
-		this.transactions.sort((o1, o2) -> o2.getSeqNum() - o1.getSeqNum());
+		// Sort by datetime, or inverse seqNum for tie-breaker.
+		this.transactions.sort((o1, o2) -> {
+			int comp = o1.getDatetime().compareTo(o2.getDatetime());
+			if (comp == 0) {
+				return o2.getSeqNum() - o1.getSeqNum();
+			} else {
+				return comp;
+			}
+		});
 		this.reports = new HashMap<>();
 	}
-
 
 	void calculateTaxFull() {
 		if (!reports.isEmpty()) {
@@ -79,11 +84,11 @@ public class TaxEngine {
 					sellReport.sellWithinFourWeeksAfterBuy |= true;
 					var sbPair = this.matchBuyAndSell(tx, stockState.fourWeeksBuys, txDeque);
 					tx = sbPair[0];
-					sellReport.buyTransaction = sbPair[1];
+					sellReport.setBuyTransaction(sbPair[1]);
 				} else if (toSell > 0 && !stockState.oldBuys.isEmpty()) {
 					var sbPair = this.matchBuyAndSell(tx, stockState.oldBuys, txDeque);
 					tx = sbPair[0];
-					sellReport.buyTransaction = sbPair[1];
+					sellReport.setBuyTransaction(sbPair[1]);
 				} else {
 					throw new RuntimeException(String
 							.format("Was not able to find enough buys to cover the sell. %s, %s", tx, sellReport));
