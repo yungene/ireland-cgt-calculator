@@ -4,6 +4,16 @@
 
 # Work in progress
 
+To build a JAR:
+```
+mvn package
+```
+
+
+Then run the shaded JAR, passing the path to file via `--f` flag. E.g.:
+```
+java -jar target/ireland-cgt-calculator-0.0.1-SNAPSHOT-shaded.jar --f="Transactions.csv"
+```
 
 # Tax Calculator
 
