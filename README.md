@@ -26,6 +26,7 @@ Features:
 - Standard FIFO CGT
 - 4 weeks rule for 28 days before + 1 day of sale + 28 after.
     - My own interpretation of the rules. See [Sources.md](/Sources.md) for my sources. And see tests for examples.
+    - TODO: should this be LIFO? Reach out to Revenue
 - Includes transaction fees in calculations. Add to buy price, subtract from sell price.
 
 Limitations:
@@ -34,8 +35,9 @@ Limitations:
 - Currency autofx fees not included, but I am not sure if they are to be included in fees for tax purposes.
 
 TODO:
+- Calculate total sale amount for taxable year
 - Export results in CSV format for post processing.
-- Export parsed transactions in a custom format as a CSV. Add support for inputting this custom CSV format. That way we can then import files from different brokers.
+- Export parsed transactions in a custom format as a CSV. Add support for inputting this custom CSV format. That way we can then import files from different brokers (IBKR, Revolut, TR).
 - Allow to import multiple files with transactions.
 - Add logger
     - Log details of every sale, what it was offset against

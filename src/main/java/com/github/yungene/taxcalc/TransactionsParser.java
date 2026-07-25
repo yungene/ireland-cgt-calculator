@@ -26,8 +26,8 @@ class TransactionsParser {
 		final static int QUANTITY = 6;
 		final static int VALUE_EUR = 11;
 		final static int FEES_EUR = 14;
-		final static int TOTAL_VALUE_EUR = 16;
-		final static int ORDER_ID = 18;
+		final static int TOTAL_VALUE_EUR = 15;
+		final static int ORDER_ID = 16;
 	}
 
 	private int seqNum;
@@ -56,7 +56,8 @@ class TransactionsParser {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] values = line.split(COMMA_DELIMETER);
-				if (values.length >= 18) {
+				// splits don't have order ID
+				if (values.length >= 17) {
 					if (values[0].equals("Date")) {
 						// Skip the first title row if it exists
 						continue;

@@ -3,6 +3,8 @@
 
 ### Degiro test files
 Transactions.csv
+degiro-*
+*Transactions*.csv
 
 ### STS ###
 .apt_generated

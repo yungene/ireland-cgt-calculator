@@ -10,6 +10,7 @@ public class TaxReport {
 	private Long totalGains = null;
 	private Long totalLosses = null;
 	private Long netGains = null;
+	private Long totalSales = null;
 
 	public TaxReport(int year) {
 		this.year = year;
@@ -33,21 +34,25 @@ public class TaxReport {
 		long totalGains = 0;
 		long totalLosses = 0;
 		long netGains = 0;
+		long totalSales = 0;
 		for (var sellReport : this.sales) {
 			var gains = sellReport.getTaxableNetGains();
 			netGains += gains;
+			// TODO: move this method to Transaction
+			totalSales += sellReport.sellTrasaction.getEuroTotalPrice() * sellReport.sellTrasaction.getQuantity();
 		}
 
 		this.totalGains = totalGains;
 		this.totalLosses = totalLosses;
 		this.netGains = netGains;
+		this.totalSales = totalSales;
 	}
 
 	public String prettyPrint() {
 		StringBuilder sb = new StringBuilder("");
 		long taxableGains = this.getTaxableNetGains();
-		sb.append(String.format("TaxReport for year %d. Total taxable gains are %s. Sales for the year were:\n",
-				this.year, Transaction.milToString(taxableGains)));
+		sb.append(String.format("TaxReport for year %d. Total sales: %s. Total taxable gains are %s. Sales for the year were:\n",
+				this.year, Transaction.milToString(this.totalSales), Transaction.milToString(taxableGains)));
 		for (var sp : sales) {
 			sb.append("\t");
 			sb.append(sp);
